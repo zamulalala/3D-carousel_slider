@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title>3D cloud</title>
+
+      <!-- custom stylesheet -->
+      <link rel="stylesheet" href="main.css">
+
+      <!-- font-awesome icons -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+
+      <!-- Jquery CDN -->
+      <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+      <!-- Plugin  -->
+      <script src="jquery.reflection.js"></script>
+      <script src="jquery.cloud9carousel.js"></script>
+</head>
+<body>
+      <img src="./logo.png" alt="" class="logo">
+      <div id="wrap">
+            <div id="showcase">
+                  <img src="./01.png" alt="Премиальные квартиры на первой береговой линии Измира" class="cloud9-item">
+                  <img src="./02.png" alt="Финишная отделка и машино-место включены в стоимость" class="cloud9-item">
+                  <img src="./03.png" alt="Террасы с видом на море и панорамное остекление" class="cloud9-item">
+                  <img src="./04.png" alt="Полное сопровождение сделки и оформления гражданства" class="cloud9-item">
+                  <img src="./05.png" alt="Потрясающие виды на все стороны света" class="cloud9-item">
+                  <img src="./06.png" alt="Ритм большого города сочетается со спокойствием курорта" class="cloud9-item">
+            </div>
+
+            <p id="item-title">&nbsp;</p>
+
+            <div class="nav noselect">
+                  <button class="left"><i class="fa fa-arrow-left"></i></button>
+                  <button class="right"><i class="fa fa-arrow-right"></i></button>
+            </div>
+
+      </div>
+
+      <script type="text/javascript">
+
+      $(function() {
+            var showcase = $("#showcase")
+
+            showcase.Cloud9Carousel( {
+                  yPos: 42,
+                  yRadius: 48,
+                  mirrorOptions: {
+                        gap: 12,
+                        height: 0.2
+                  },
+                  buttonLeft: $(".nav > .left"),
+                  buttonRight: $(".nav > .right"),
+                  autoPlay: true,
+                  bringToFront: true,
+
+                  onRendered: showcaseUpdated,
+                  onLoaded: function() {
+                        showcase.css( 'visibility', 'visible' )
+                        showcase.css( 'display', 'none')
+                        showcase.fadeIn( 1500 )
+                  }
+            })
+
+            function showcaseUpdated( showcase ) {
+                  var title = $("#item-title").html(
+                        $(showcase.nearestItem()).attr( 'alt' )
+                  )
+
+                  var c = Math.cos((showcase.floatIndex() % 1) * 2 * Math.PI)
+                  title.css('opacity', 0.5 + (0.5 * c))
+            }
+
+            $('.nav > button').click( function( e ) {
+                  var b = $(e.target).addClass( 'down' )
+                  setTimeout( function() { b.removeClass( 'down' ) }, 80)
+            } )
+
+            $(document).keydown( function( e ) {
+                  switch( e.keyCode ) {
+                        case 37:
+                        $('.nav > .left').click()
+                        break
+
+                        case 39:
+                        $('.nav > .right').click()
+                  }
+            })
+      })
+
+      </script>
+</body>
+</html>
